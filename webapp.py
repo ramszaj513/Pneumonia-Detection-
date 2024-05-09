@@ -17,7 +17,7 @@ MODEL_DOWNLOADED = False
 MODEL_FILE = "pneumonia_detection_model.h5"
 #https://drive.google.com/file/d/1nKHyI1FC5ECrW9_LRKqfBmoz8xrGqX0I/view?usp=sharing
 
-url = 'https://drive.google.com/uc?/export=download&id=1nKHyI1FC5ECrW9_LRKqfBmoz8xrGqX0I'
+url = "https://drive.google.com/uc?id=1nKHyI1FC5ECrW9_LRKqfBmoz8xrGqX0I"
 
 # Getting the model from google drive
 
