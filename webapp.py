@@ -43,7 +43,7 @@ def main():
         # Display the table with results
         data = {
         'Prediction': [result],
-        'Certainty': [round(propability[0][0],2)],
+        'Certainty': ["{:.2f}".format(propability[0][0])],
         }
         df = pd.DataFrame(data)
         st.table(df)
