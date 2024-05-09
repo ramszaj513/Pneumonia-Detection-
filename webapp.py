@@ -12,7 +12,7 @@ import cv2
 import pandas as pd
 import gdown
 from pathlib import Path
-
+#dfsd
 IMG_SIZE = 224
 url = "https://drive.google.com/uc?id=1nKHyI1FC5ECrW9_LRKqfBmoz8xrGqX0I"
 """
