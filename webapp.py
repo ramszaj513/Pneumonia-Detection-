@@ -22,11 +22,11 @@ url = 'https://drive.google.com/uc?/export=download&id=1IGxRUQbh3hii-uCDhynISgBf
 # Getting the model from google drive
 
 if(MODEL_DOWNLOADED == False):
-    gdown.download(url)
+    #gdown.download(url)
     gdown.download(url,MODEL_FILE)
     MODEL_DOWNLOADED = True
 
-model = load_model("pneumonia_detection_model.h5", compile=False)
+#model = load_model("pneumonia_detection_model.h5", compile=False)
 model = load_model(MODEL_FILE, compile=False)
 
 st.write("""
