@@ -13,19 +13,30 @@ import pandas as pd
 import gdown
 
 IMG_SIZE = 224
+url = "https://drive.google.com/uc?id=1nKHyI1FC5ECrW9_LRKqfBmoz8xrGqX0I"
+"""
 MODEL_DOWNLOADED = False
 MODEL_FILE = "pneumonia_detection_model.h5"
 #https://drive.google.com/file/d/1nKHyI1FC5ECrW9_LRKqfBmoz8xrGqX0I/view?usp=sharing
-
-url = "https://drive.google.com/uc?id=1nKHyI1FC5ECrW9_LRKqfBmoz8xrGqX0I"
 
 # Getting the model from google drive
 
 if(MODEL_DOWNLOADED == False):
     gdown.download(url,MODEL_FILE)
     MODEL_DOWNLOADED = True
+"""
 
-model = load_model(MODEL_FILE, compile=False)
+def loading_model():
+    f_checkpoint = Path("pneumonia_detection_model.h5")
+
+    if not f_checkpoint.exists():
+        with st.spinner("Downloading model... this may take awhile! \n Don't stop it!"):
+            from GD_download import download_file_from_google_drive
+            download_file_from_google_drive(url, f_checkpoint)
+    model = load_model(f_checkpoint, compile=False)
+    return model
+        
+model = loading_model()
 
 st.write("""
 # Pneumonia detection app         
