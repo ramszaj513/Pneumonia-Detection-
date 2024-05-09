@@ -6,4 +6,3 @@ opencv-python-headless
 pandas 
 gdown
 tensorflow_hub
-GD_download
