@@ -2,6 +2,6 @@ streamlit
 matplotlib
 tensorflow 
 numpy 
-cv2
+opencv-python-headless
 pandas 
 gdown
