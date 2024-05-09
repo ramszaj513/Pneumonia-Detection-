@@ -11,38 +11,27 @@ import h5py
 import cv2
 import pandas as pd
 import gdown
-from pathlib import Path
-#dfsd
+
 IMG_SIZE = 224
-url = "https://drive.google.com/uc?id=1nKHyI1FC5ECrW9_LRKqfBmoz8xrGqX0I"
-"""
 MODEL_DOWNLOADED = False
 MODEL_FILE = "pneumonia_detection_model.h5"
 #https://drive.google.com/file/d/1nKHyI1FC5ECrW9_LRKqfBmoz8xrGqX0I/view?usp=sharing
 
+url = 'https://drive.google.com/uc?/export=download&id=1nKHyI1FC5ECrW9_LRKqfBmoz8xrGqX0I'
+
 # Getting the model from google drive
 
 if(MODEL_DOWNLOADED == False):
+    gdown.download(url)
     gdown.download(url,MODEL_FILE)
     MODEL_DOWNLOADED = True
-"""
 
-def loading_model():
-    f_checkpoint = Path("pneumonia_detection_model.h5")
-
-    if not f_checkpoint.exists():
-        with st.spinner("Downloading model... this may take awhile! \n Don't stop it!"):
-            from GD_download import download_file_from_google_drive
-            download_file_from_google_drive(url, f_checkpoint)
-    model = load_model(f_checkpoint, compile=False)
-    return model
-        
-model = loading_model()
+model = load_model("pneumonia_detection_model.h5", compile=False)
+model = load_model(MODEL_FILE, compile=False)
 
 st.write("""
 # Pneumonia detection app         
 """)
-
 def main():
     file_uploaded = st.file_uploader("Choose a file", type = ['jpg', 'png', 'jpeg'])
     if file_uploaded is not None:
@@ -58,20 +47,17 @@ def main():
         }
         df = pd.DataFrame(data)
         st.table(df)
-
         # Display the image
         figure = plt.figure()
         plt.imshow(image)
         plt.axis('off')
         st.pyplot(figure)
-
 def preprocess_image(image):
     resized_image = image.resize((IMG_SIZE, IMG_SIZE))
     image_array = np.array(resized_image)
     image = np.expand_dims(image_array, axis=0)
     image = image / 255.0  
     return image
-
 def predict_image(image):
     
     preprocessed_image = preprocess_image(image)
@@ -87,6 +73,5 @@ def calculate_certainty(prediction):
     entropy = - (prediction * np.log(prediction) + (1 - prediction) * np.log(1 - prediction))
     certainty = 1 - entropy
     return certainty
-
 if __name__ == "__main__":
     main()  
