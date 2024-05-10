@@ -25,29 +25,28 @@ MODEL_FILE = "pneumonia_detection_modelv2.h5"
 #https://drive.google.com/file/d/1-NpxaTXb1b4O0BG8UN0qpqvBNzUDe4Zx/view?usp=sharing
 
 # Links to models on google drive
-url_transfer = 'https://drive.google.com/uc?/d/1IGxRUQbh3hii-uCDhynISgBfAvcv4jx7/view?usp=sharing'
-url_greyscale = 'https://drive.google.com/uc?/export=download&id=1ZgaIquSg1wieAvTLnqPeCUJqX-aH76XR'
-url_greyscale2 = 'https://drive.google.com/uc?/export=download&id=1-NpxaTXb1b4O0BG8UN0qpqvBNzUDe4Zx'
+#url_transfer = 'https://drive.google.com/uc?/d/1IGxRUQbh3hii-uCDhynISgBfAvcv4jx7/view?usp=sharing'
+#url_greyscale = 'https://drive.google.com/uc?/export=download&id=1ZgaIquSg1wieAvTLnqPeCUJqX-aH76XR'
+#url_greyscale2 = 'https://drive.google.com/uc?/export=download&id=1-NpxaTXb1b4O0BG8UN0qpqvBNzUDe4Zx'
 
-url = url_greyscale2
-repository_url = "ramszaj513/Pneumonia Detection"
-path_to_check = MODEL_FILE
+#url = url_greyscale2
+#repository_url = "ramszaj513/Pneumonia Detection"
+#path_to_check = MODEL_FILE
 
-def check_github_path(repository_url, path):
-    api_url = f"https://api.github.com/repos/{repository_url}/contents/{path}"
-    response = requests.get(api_url)
-    
-    if (response.status_code == 200):
-        return True  # Path exists
-    else:
-        return False  # Path does not exist
+#Function to check if the model already exists in github repository
+#def check_github_path(repository_url, path):
+#    api_url = f"https://api.github.com/repos/{repository_url}/contents/{path}"
+#    response = requests.get(api_url)
+#    
+#    if (response.status_code == 200):
+#        return True  # Path exists
+#    else:
+#        return False  # Path does not exist
+#
 
-if not check_github_path(repository_url, path_to_check):
-     gdown.download(url, MODEL_FILE)
-
-# Getting the model from google drive
-#if not Path(MODEL_FILE).is_file:
-#   gdown.download(url, MODEL_FILE)
+#If the model doesn't exist we download it from google drive
+#if not check_github_path(repository_url, path_to_check):
+#     gdown.download(url, MODEL_FILE)
 
 # Loading the model
 model = load_model(MODEL_FILE, compile=False)
@@ -67,10 +66,13 @@ def main():
         # Getting the predictions
         result, confidence, prediction = predict_image(image)
         
+        # Calculating percentage of confidence
+        percentage = str(int(confidence[0][0]*100)) + "%"
+
         # Displaying the table with results
         data = {
         'Prediction': [result],
-        'Confidence': ["{:.2f}".format(confidence[0][0])],
+        'Confidence': [percentage],
         }
         df = pd.DataFrame(data)
         st.table(df)

@@ -1,3 +1,5 @@
+#This is a not finished version of a script which downloads a file from dropbox in case if the model is more than 100mg
+
 import dropbox
 
 MODEL_FILE = "pneumonia_detection_modelv2.h5"

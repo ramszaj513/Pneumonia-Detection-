@@ -11,28 +11,6 @@ import cv2
 MODEL_FILE = "pneumonia_detection_modelv2.h5"
 IMG_SIZE = 224
 
-# load the pre-trained model
-#model = load_model(MODEL_FILE)
-
-# load an image (in opencv format) and then
-# resize the image to its target dimensions
-#img_path = r"C:\Users\Kuba\Desktop\VSCode\DATASETS\TEST\NORMAL-745902-0001.jpeg"
-#orig = cv2.imread(img_path)
-#resized = cv2.resize(orig, (IMG_SIZE, IMG_SIZE))
-
-# load the input image (in Keras/TensorFlow format) and
-# preprocess it
-#image = load_img(img_path, target_size=(IMG_SIZE, IMG_SIZE), color_mode="grayscale")
-#image = img_to_array(image)
-#image = np.expand_dims(image, axis=0)
-#image = image / 255
-
-# use the network to make predictions on the input imag and find
-# the class label index with the largest corresponding probability
-#preds = model.predict(image)
-#i = np.argmax(preds[0])
-#print(preds)
-
 class GradCAM:
     def __init__(self, model, classIdx, layerName=None):
         
@@ -124,23 +102,3 @@ class GradCAM:
         # overlaid image
         return (heatmap, output)
     
-
-# initialize our gradient class activation map and build the heatmap
-
-#cam = GradCAM(model, i)
-#heatmap = cam.compute_heatmap(image)
-
-# resize the resulting heatmap to the original input image dimensions
-# and then overlay heatmap on top of the image
-
-#heatmap = cv2.resize(heatmap, (orig.shape[1], orig.shape[0]))
-#(heatmap, output) = cam.overlay_heatmap(heatmap, orig, alpha=0.5)
-
-# display the original image and resulting heatmap and output image
-# to our screen
-
-#output = np.vstack([orig, output])
-#output = imutils.resize(output, height=700)
-#cv2.imshow("Output", output)
-#cv2.waitKey(0)
-#cv2.destroyAllWindows()
