@@ -11,19 +11,27 @@ import h5py
 import cv2
 import pandas as pd
 import gdown
+from heatmap import GradCAM
+from pathlib import Path
 
 IMG_SIZE = 224
-MODEL_DOWNLOADED = False
-MODEL_FILE = "pneumonia_detection_model.h5"
+MODEL_FILE = "pneumonia_detection_modelv2.h5"
 
+#https://drive.google.com/file/d/1ZgaIquSg1wieAvTLnqPeCUJqX-aH76XR/view?usp=sharing
 #https://drive.google.com/file/d/1nKHyI1FC5ECrW9_LRKqfBmoz8xrGqX0I/view?usp=sharing
-url = 'https://drive.google.com/uc?/export=download&id=1IGxRUQbh3hii-uCDhynISgBfAvcv4jx7'
+#https://drive.google.com/uc?/export=download&id=1IGxRUQbh3hii-uCDhynISgBfAvcv4jx7
+
+# Links to models on google drive
+url_transfer = 'https://drive.google.com/uc?/d/1IGxRUQbh3hii-uCDhynISgBfAvcv4jx7/view?usp=sharing'
+url_greyscale = 'https://drive.google.com/uc?/export=download&id=1ZgaIquSg1wieAvTLnqPeCUJqX-aH76XR'
+
+url = url_greyscale
 
 # Getting the model from google drive
-if(MODEL_DOWNLOADED == False):
-    gdown.download(url,MODEL_FILE)
-    MODEL_DOWNLOADED = True
+if not Path(MODEL_FILE).is_file:
+    gdown.download(url, MODEL_FILE)
 
+# Loading the model
 model = load_model(MODEL_FILE, compile=False)
 
 st.write("""
@@ -33,46 +41,64 @@ st.write("""
 def main():
     file_uploaded = st.file_uploader("Choose a file", type = ['jpg', 'png', 'jpeg'])
     if file_uploaded is not None:
-        image = Image.open(file_uploaded).convert("RGB")
+        image_displayed = Image.open(file_uploaded).convert("RGB")
+        resized_image = image_displayed.resize((IMG_SIZE, IMG_SIZE))
+        resized_image = np.array(resized_image)
+        image = Image.open(file_uploaded).convert("L")
         
         # Getting the predictions
-        result, propability = predict_image(image)
+        result, confidence, prediction = predict_image(image)
         
-        # Display the table with results
+        # Displaying the table with results
         data = {
         'Prediction': [result],
-        'Certainty': ["{:.2f}".format(propability[0][0])],
+        'Confidence': ["{:.2f}".format(confidence[0][0])],
         }
         df = pd.DataFrame(data)
         st.table(df)
-        
-        # Display the image
+
+        # Creating Slider
+        alpha = st.slider("Transparency level", 0.0, 1.0, 0.5, 0.1)
+
+        # Creating heatmap
+        i = np.argmax(prediction[0])
+        cam = GradCAM(model, i)
+        heatmap = cam.compute_heatmap(preprocess_image(image))
+
+        # Creating blended image
+        heatmap , blended_image = cam.overlay_heatmap(heatmap, resized_image, alpha, cv2.COLORMAP_JET)
+
+        #Displaying the blended image
         figure = plt.figure()
-        plt.imshow(image)
+        plt.imshow(blended_image)
         plt.axis('off')
         st.pyplot(figure)
         
+
+
 def preprocess_image(image):
     resized_image = image.resize((IMG_SIZE, IMG_SIZE))
     image_array = np.array(resized_image)
     image = np.expand_dims(image_array, axis=0)
     image = image / 255.0  
     return image
-    
+
 def predict_image(image):
+    
     preprocessed_image = preprocess_image(image)
     prediction = model.predict(preprocessed_image)
     if prediction > 0.5:
-        prediction = calculate_certainty(prediction)
-        return "PNEUMONIA", prediction
+        certainty = calculate_certainty(prediction)
+        return "PNEUMONIA", certainty, prediction
     else:
-        prediction = calculate_certainty(prediction)
-        return "NORMAL", prediction
+        certainty = calculate_certainty(prediction)
+        return "NORMAL", certainty, prediction
     
 def calculate_certainty(prediction):
     entropy = - (prediction * np.log(prediction) + (1 - prediction) * np.log(1 - prediction))
     certainty = 1 - entropy
     return certainty
-    
+
 if __name__ == "__main__":
     main()  
+
