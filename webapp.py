@@ -66,10 +66,13 @@ def main():
         # Getting the predictions
         result, confidence, prediction = predict_image(image)
         
+        # Calculating percentage of confidence
+        percentage = round(confidence[0][0],2) * 100
+
         # Displaying the table with results
         data = {
         'Prediction': [result],
-        'Confidence': ["{:.2f}".format(confidence[0][0])],
+        'Confidence': [str(percentage)+"%"],
         }
         df = pd.DataFrame(data)
         st.table(df)
