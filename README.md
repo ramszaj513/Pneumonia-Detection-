@@ -5,8 +5,9 @@ Additionaly a heatmap of most significant pixels is cerated and displayed blende
 
 # Project Files
 model_cnn.py - code used to generate and train a CNN model, it isn't used directly by streamlit website  
-heatmap - contains class which is used to generate heatmap  
-webbapp - creates and manages the website functionality
+heatmap.py - contains class which is used to generate heatmap  
+webbapp.py - creates and manages the website functionality  
+requirments.txt - libraries required to run the code  
 
 # Sources
 Heatmap algorithm source: https://github.com/wiqaaas/youtube/blob/master/Deep_Learning_Using_Tensorflow/Demystifying_CNN/Gradient%20Visualization.ipynb  
