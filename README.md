@@ -1,6 +1,5 @@
 # Pneumonia-Detection-
-
-The purpose of this project is to create a streamlit website where you can uplouad images of x-rays and the deep learning model predicts if the image depicts pneumonia. 
+The purpose of this project is to create a streamlit website where you can uploud an image of x-ray and the deep learning model predicts if the image depicts pneumonia. 
 Additionaly a heatmap of most significant pixels is cerated and displayed blended with the orignial images in order to help potentional users in pnuemonia recognition
 
 # Project Files
