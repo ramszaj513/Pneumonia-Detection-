@@ -17,7 +17,7 @@ import requests
 from heatmap import GradCAM
 
 IMG_SIZE = 224
-MODEL_FILE = "pneumonia_detection_modelv2.h5"
+MODEL_FILE = "pneumonia_detection_modelv3.h5"
 
 #https://drive.google.com/file/d/1ZgaIquSg1wieAvTLnqPeCUJqX-aH76XR/view?usp=sharing
 #https://drive.google.com/file/d/1nKHyI1FC5ECrW9_LRKqfBmoz8xrGqX0I/view?usp=sharing
