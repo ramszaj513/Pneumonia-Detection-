@@ -11,8 +11,10 @@ import h5py
 import cv2
 import pandas as pd
 import gdown
-from heatmap import GradCAM
 from pathlib import Path
+import requests
+
+from heatmap import GradCAM
 
 IMG_SIZE = 224
 MODEL_FILE = "pneumonia_detection_modelv2.h5"
@@ -26,10 +28,24 @@ url_transfer = 'https://drive.google.com/uc?/d/1IGxRUQbh3hii-uCDhynISgBfAvcv4jx7
 url_greyscale = 'https://drive.google.com/uc?/export=download&id=1ZgaIquSg1wieAvTLnqPeCUJqX-aH76XR'
 
 url = url_greyscale
+repository_url = "ramszaj513/Pneumonia Detection"
+path_to_check = MODEL_FILE
+
+def check_github_path(repository_url, path):
+    api_url = f"https://api.github.com/repos/{repository_url}/contents/{path}"
+    response = requests.get(api_url)
+    
+    if response.status_code == 200:
+        return True  # Path exists
+    else response.status_code == 404:
+        return False  # Path does not exist
+
+if not check_github_path(repository_url, path_to_check):
+     gdown.download(url, MODEL_FILE)
 
 # Getting the model from google drive
-if not Path(MODEL_FILE).is_file:
-    gdown.download(url, MODEL_FILE)
+#if not Path(MODEL_FILE).is_file:
+#   gdown.download(url, MODEL_FILE)
 
 # Loading the model
 model = load_model(MODEL_FILE, compile=False)
