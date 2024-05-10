@@ -37,7 +37,7 @@ def check_github_path(repository_url, path):
     
     if (response.status_code == 200):
         return True  # Path exists
-    else (response.status_code == 404):
+    else:
         return False  # Path does not exist
 
 if not check_github_path(repository_url, path_to_check):
