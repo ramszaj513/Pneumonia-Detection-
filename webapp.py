@@ -25,14 +25,15 @@ MODEL_FILE = "pneumonia_detection_modelv2.h5"
 #https://drive.google.com/file/d/1-NpxaTXb1b4O0BG8UN0qpqvBNzUDe4Zx/view?usp=sharing
 
 # Links to models on google drive
-url_transfer = 'https://drive.google.com/uc?/d/1IGxRUQbh3hii-uCDhynISgBfAvcv4jx7/view?usp=sharing'
-url_greyscale = 'https://drive.google.com/uc?/export=download&id=1ZgaIquSg1wieAvTLnqPeCUJqX-aH76XR'
-url_greyscale2 = 'https://drive.google.com/uc?/export=download&id=1-NpxaTXb1b4O0BG8UN0qpqvBNzUDe4Zx'
+#url_transfer = 'https://drive.google.com/uc?/d/1IGxRUQbh3hii-uCDhynISgBfAvcv4jx7/view?usp=sharing'
+#url_greyscale = 'https://drive.google.com/uc?/export=download&id=1ZgaIquSg1wieAvTLnqPeCUJqX-aH76XR'
+#url_greyscale2 = 'https://drive.google.com/uc?/export=download&id=1-NpxaTXb1b4O0BG8UN0qpqvBNzUDe4Zx'
 
-url = url_greyscale2
-repository_url = "ramszaj513/Pneumonia Detection"
-path_to_check = MODEL_FILE
+#url = url_greyscale2
+#repository_url = "ramszaj513/Pneumonia Detection"
+#path_to_check = MODEL_FILE
 
+#Function to check if the model already exists in github repository
 #def check_github_path(repository_url, path):
 #    api_url = f"https://api.github.com/repos/{repository_url}/contents/{path}"
 #    response = requests.get(api_url)
@@ -42,6 +43,8 @@ path_to_check = MODEL_FILE
 #    else:
 #        return False  # Path does not exist
 #
+
+#If the model doesn't exist we download it from google drive
 #if not check_github_path(repository_url, path_to_check):
 #     gdown.download(url, MODEL_FILE)
 
