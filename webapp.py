@@ -67,7 +67,7 @@ def main():
         result, confidence, prediction = predict_image(image)
         
         # Calculating percentage of confidence
-        percentage = str((confidence[0][0]*100)//100) + "%"
+        percentage = str(int(confidence[0][0]*100)) + "%"
 
         # Displaying the table with results
         data = {
