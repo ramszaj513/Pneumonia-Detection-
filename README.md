@@ -5,10 +5,11 @@ The purpose of this project is to create a streamlit website where you can uplou
 Additionaly a heatmap of most significant pixels is created and displayed blended with the orignial image in order to help potentional users in pnuemonia recognition
 
 ## Project Files
-model_cnn.py - code used to generate and train a CNN model, it isn't used directly by the streamlit website  
-heatmap.py - contains class which is used to generate heatmap  
-webbapp.py - creates and manages the website functionality  
-requirments.txt - libraries required to run the code  
+model_cnn.py - code used to generate and train a CNN model, it isn't used directly by the streamlit website    
+heatmap.py - contains class which is used to generate heatmap by webapp.py   
+webbapp.py - creates and manages the website functionality    
+requirments.txt - libraries required to run the code    
+pneumonia_detection_modelv2.h5 - trained CNN model used by webapp.py  
 
 ## Future plans for development
 Developing more accurate deep learning model (potentially one already created and tested as efficient)  
