@@ -65,7 +65,7 @@ class GradCAM:
         # to our pre-trained model, (2) the output of the (presumably)
         # final 4D layer in the network, and (3) the output of the
         # softmax activations from the model
-        gradModel = Model(inputs=[self.model.inputs], outputs= [self.model.get_layer(self.layerName).output, self.model.output])
+        gradModel = Model(inputs=[self.model.inputs[0]], outputs= [self.model.get_layer(self.layerName).output, self.model.output])
 
         # record operations for automatic differentiation
         with tf.GradientTape() as tape:
