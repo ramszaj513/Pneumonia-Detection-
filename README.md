@@ -9,7 +9,7 @@ model_cnn.py - code used to generate and train the CNN model, it isn't used dire
 heatmap.py - contains class which is used to generate heatmap by webapp.py   
 webbapp.py - creates and manages the website functionality    
 requirments.txt - libraries required to run the code    
-pneumonia_detection_modelv2.h5 - trained CNN model used by webapp.py  
+pneumonia_detection_modelv3.h5 - trained CNN model used by webapp.py  
 
 ## Compability
 The code should work with neural networks with .h5 and .keras extension
