@@ -9,7 +9,7 @@ import imutils
 import cv2
 
 MODEL_FILE = "pneumonia_detection_modelv2.h5"
-IMG_SIZE = 500
+IMG_SIZE = 224
 
 class GradCAM:
     def __init__(self, model, classIdx, layerName=None):
