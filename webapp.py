@@ -16,8 +16,8 @@ import requests
 
 from heatmap import GradCAM
 
-IMG_SIZE = 500
-MODEL_FILE = "pneumonia_detection_modelv4.h5"
+IMG_SIZE = 224
+MODEL_FILE = "pneumonia_detection_modelv3.h5"
 
 #https://drive.google.com/file/d/1ZgaIquSg1wieAvTLnqPeCUJqX-aH76XR/view?usp=sharing
 #https://drive.google.com/file/d/1nKHyI1FC5ECrW9_LRKqfBmoz8xrGqX0I/view?usp=sharing
@@ -98,9 +98,9 @@ def main():
 
 def preprocess_image(image):
     resized_image = image.resize((IMG_SIZE, IMG_SIZE))
-    equ_img = cv.equalizeHist(resized_image)
-    gauss_img = cv.GaussianBlur(equ_img, (5, 5), 0)
-    image_array = np.array(gauss_img)
+    #equ_img = cv.equalizeHist(resized_image)
+    #gauss_img = cv.GaussianBlur(equ_img, (5, 5), 0)
+    image_array = np.array(resized_image)
     image = np.expand_dims(image_array, axis=0)
     image = image / 255.0  
     return image
