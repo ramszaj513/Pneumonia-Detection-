@@ -75,7 +75,7 @@ class SimpleNN(nn.Module):
 # Loading the model
 model = SimpleNN()
 model.load_state_dict(torch.load("model1.pt"))
-
+model.eval()
 
 st.write("""
 # Pneumonia detection app         
@@ -93,7 +93,7 @@ def main():
         result, confidence, prediction = predict_image(image)
         
         # Calculating percentage of confidence
-        percentage = str(int(confidence[0][0]*100)) + "%"
+        percentage = str(int(confidence*100)) + "%"
 
         # Displaying the table with results
         data = {
@@ -121,14 +121,16 @@ def main():
         st.pyplot(figure)
         
 def resize_with_borders(img, width, height):
+    img = np.array(img)
     border_v = 0
     border_h = 0
     if (height / width) >= (img.shape[0] / img.shape[1]):
         border_v = int((((height / width) * img.shape[1]) - img.shape[0]) / 2)
     else:
         border_h = int((((width / height) * img.shape[0]) - img.shape[1]) / 2)
-    img = cv2.copyMakeBorder(img, border_v, border_v, border_h, border_h, cv.BORDER_CONSTANT, 0)
+    img = cv2.copyMakeBorder(img, border_v, border_v, border_h, border_h, cv2.BORDER_CONSTANT, 0)
     img = cv2.resize(img, (width, height))
+    img = Image.fromarray(np.uint8(img))
     return img
 
 transform = transforms.Compose([
@@ -153,8 +155,6 @@ def calculate_certainty(prediction):
     entropy = - (prediction * np.log(prediction) + (1 - prediction) * np.log(1 - prediction))
     certainty = 1 - entropy
     return certainty
-
-
 
 
 if __name__ == "__main__":
