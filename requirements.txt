@@ -7,3 +7,5 @@ pandas
 gdown
 tensorflow_hub
 imutils
+torch
+torchvision
