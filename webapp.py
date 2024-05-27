@@ -65,7 +65,7 @@ def main():
         rgb_image = image
         img_float = np.array(rgb_image) / 255
         input_tensor = preprocess_image(img_float)
-        grayscale_cams = cam(input_tensor=input_tensor.float(), targets=targets)
+        grayscale_cams = cam(input_tensor=input_tensor, targets=targets)
 
         # Creating blended image
         cam_image = show_cam_on_image(img_float, grayscale_cams[0, :], use_rgb=True, image_weight=(1 - alpha))
