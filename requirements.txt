@@ -9,4 +9,4 @@ tensorflow_hub
 imutils
 torch
 torchvision
-pytorch_grad_cam
+grad-cam
