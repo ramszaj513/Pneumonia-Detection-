@@ -11,7 +11,7 @@ import torchvision
 from torchvision import transforms
 import preprocess
 
-import pytorch_grad_cam
+#import pytorch_grad_cam
 from pytorch_grad_cam import GradCAM
 from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
 from pytorch_grad_cam.utils.image import show_cam_on_image, preprocess_image
@@ -65,7 +65,7 @@ def main():
         # Creating heatmap
         targets = [ClassifierOutputTarget(predicted)]
         target_layers = [model.features[-1]]
-        cam = pytorch_grad_cam.HiResCAM(model=model, target_layers=target_layers)
+        cam = GradCAM(model=model, target_layers=target_layers)
         img_float = np.float32(np.array(image)) / 255
         input_tensor = preprocess_image(img_float, mean=[0.5, 0.5, 0.5],
                                     std=[0.5, 0.5, 0.5])
