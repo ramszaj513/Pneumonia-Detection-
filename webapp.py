@@ -33,7 +33,7 @@ def main():
         image_displayed = Image.open(file_uploaded).convert("RGB")
         #resized_image = image_displayed.resize((IMG_SIZE, IMG_SIZE))
         #resized_image = np.array(resized_image)
-        image = Image.open(file_uploaded).convert("L")
+        image = Image.open(file_uploaded)
         image = preprocess.preprocess(image)
         # Getting the predictions
         result, confidence, prediction = predict_image(image)
