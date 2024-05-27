@@ -14,7 +14,10 @@ def resize_with_borders(img, width, height):
 
 def preprocess(img):
     img = np.array(img)
-    img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    try:
+        img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    except:
+        pass
     equ_img = cv.equalizeHist(img)
     gauss_img = cv.GaussianBlur(equ_img, (5, 5), 0)
     resized_img = resize_with_borders(gauss_img, 384, 384)
