@@ -45,7 +45,7 @@ def main():
         result, confidence, prediction = predict_image(image)
         
         # Calculating percentage of confidence
-        percentage = str(int(confidence)) + "%"
+        percentage = str(confidence)) + "%"
 
         # Displaying the table with results
         data = {
