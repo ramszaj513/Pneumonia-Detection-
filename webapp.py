@@ -19,7 +19,8 @@ from pytorch_grad_cam.utils.image import show_cam_on_image, preprocess_image
 
 model = torchvision.models.efficientnet_v2_s()
 model.classifier[1] = torch.nn.Linear(in_features=1280, out_features=2, bias=True)
-model.load_state_dict(torch.load("model_efficientnet.pth"))
+device = torch.device('cpu')
+model.load_state_dict(torch.load("model_efficientnet.pth", map_location=device))
 model.eval()
 
 st.write("""
