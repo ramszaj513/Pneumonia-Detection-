@@ -62,9 +62,10 @@ def main():
         targets = [ClassifierOutputTarget(prediction)]
         target_layers = [model.features[-1]]
         cam = GradCAM(model=model, target_layers=target_layers)
-        img_float = np.array(image) / 255
-        input_tensor = preprocess_image(img_float)
-        grayscale_cams = cam(input_tensor=input_tensor.float(), targets=targets)
+        img_float = np.float32(np.array(image)) / 255
+        input_tensor = preprocess_image(img_float, mean=[0.5, 0.5, 0.5],
+                                    std=[0.5, 0.5, 0.5])
+        grayscale_cams = cam(input_tensor=input_tensor, targets=targets)
 
         # Creating blended image
         cam_image = show_cam_on_image(img_float, grayscale_cams[0, :], use_rgb=True, image_weight=(1 - alpha))
