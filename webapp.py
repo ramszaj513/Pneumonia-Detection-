@@ -23,14 +23,14 @@ device = torch.device('cpu')
 model.load_state_dict(torch.load("model_efficientnet.pth", map_location=device))
 model.eval()
 
-logo_path = "log_projekt_cut.png" # Path to logo image file
-logo = Image.open(logo_path) # Open the image file
+#logo_path = "log_projekt_cut.png" # Path to logo image file
+#logo = Image.open(logo_path) # Open the image file
 
-col1, mid, col2 = st.columns([10,1,2])
-with col1:
+#col1, mid, col2 = st.columns([10,1,2])
+#with col1:
     st.write(""" # Pneumonia detection app """)
-with col2:
-    st.image(logo, width=100)
+#with col2:
+ #   st.image(logo, width=100)
 
 def main():
     file_uploaded = st.file_uploader("Choose a file", type = ['jpg', 'png', 'jpeg'])
