@@ -61,7 +61,7 @@ def main():
         # Creating heatmap
         targets = [ClassifierOutputTarget(prediction)]
         target_layers = [model.features[-1]]
-        cam = GradCAM(model=model, target_layers=target_layers)
+        cam = pytorch_grad_cam.HiResCAM(model=model, target_layers=target_layers)
         img_float = np.float32(np.array(image)) / 255
         input_tensor = preprocess_image(img_float, mean=[0.5, 0.5, 0.5],
                                     std=[0.5, 0.5, 0.5])
