@@ -36,53 +36,56 @@ with col2:
 def main():
     file_uploaded = st.file_uploader("Choose a file", type = ['jpg', 'png', 'jpeg'])
     if file_uploaded is not None:
-        image_displayed = Image.open(file_uploaded).convert("RGB")
-        #resized_image = image_displayed.resize((IMG_SIZE, IMG_SIZE))
-        #resized_image = np.array(resized_image)
-        image = Image.open(file_uploaded).convert("RGB")
-        image = preprocess.preprocess(image)
-        image = Image.merge("RGB", (image, image, image))
-        # Getting the predictions
-        result, confidence, prediction = predict_image(image)
-        
-        # Calculating percentage of confidence
-        percentage = str(confidence) + "%"
-
-        # Displaying the table with results
-        data = {
-        'Prediction': [result],
-        'Confidence': [percentage],
-        }
-        df = pd.DataFrame(data)
-        st.table(df)
-
-        # Creating Slider
-        alpha = st.slider("Transparency level", 0.0, 1.0, 0.5, 0.1)
-
-        output = model(transform(image).unsqueeze(0))
-        _, predicted = torch.max(output, 1)
-        
-        # Creating heatmap
-        targets = [ClassifierOutputTarget(predicted)]
-        target_layers = [model.features[-1]]
-        cam = GradCAM(model=model, target_layers=target_layers)
-        img_float = np.float32(np.array(image)) / 255
-        input_tensor = preprocess_image(img_float, mean=[0.5, 0.5, 0.5],
-                                    std=[0.5, 0.5, 0.5])
-        grayscale_cams = cam(input_tensor=input_tensor, targets=targets)
-
-        # Creating blended image
-        cam_image = show_cam_on_image(img_float, grayscale_cams[0, :], use_rgb=True, image_weight=(1 - alpha))
-
-        #Displaying the blended image
-        figure = plt.figure()
-        plt.imshow(cam_image)
-        plt.axis('off')
-        st.pyplot(figure)
-
-transform = transforms.Compose([transforms.ToTensor(),
-                               transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])],
-                               )
+        try:
+            image_displayed = Image.open(file_uploaded).convert("RGB")
+            #resized_image = image_displayed.resize((IMG_SIZE, IMG_SIZE))
+            #resized_image = np.array(resized_image)
+            image = Image.open(file_uploaded).convert("RGB")
+            image = preprocess.preprocess(image)
+            image = Image.merge("RGB", (image, image, image))
+            # Getting the predictions
+            result, confidence, prediction = predict_image(image)
+            
+            # Calculating percentage of confidence
+            percentage = str(confidence) + "%"
+    
+            # Displaying the table with results
+            data = {
+            'Prediction': [result],
+            'Confidence': [percentage],
+            }
+            df = pd.DataFrame(data)
+            st.table(df)
+    
+            # Creating Slider
+            alpha = st.slider("Transparency level", 0.0, 1.0, 0.5, 0.1)
+    
+            output = model(transform(image).unsqueeze(0))
+            _, predicted = torch.max(output, 1)
+            
+            # Creating heatmap
+            targets = [ClassifierOutputTarget(predicted)]
+            target_layers = [model.features[-1]]
+            cam = GradCAM(model=model, target_layers=target_layers)
+            img_float = np.float32(np.array(image)) / 255
+            input_tensor = preprocess_image(img_float, mean=[0.5, 0.5, 0.5],
+                                        std=[0.5, 0.5, 0.5])
+            grayscale_cams = cam(input_tensor=input_tensor, targets=targets)
+    
+            # Creating blended image
+            cam_image = show_cam_on_image(img_float, grayscale_cams[0, :], use_rgb=True, image_weight=(1 - alpha))
+    
+            #Displaying the blended image
+            figure = plt.figure()
+            plt.imshow(cam_image)
+            plt.axis('off')
+            st.pyplot(figure)
+    
+            transform = transforms.Compose([transforms.ToTensor(),
+                                   transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])],
+                                   )
+        except Exception as e:
+            st.error(f"An error occurred: {e}")
 
 
 
