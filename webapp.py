@@ -40,6 +40,7 @@ def main():
         #resized_image = np.array(resized_image)
         image = Image.open(file_uploaded).convert("RGB")
         image = preprocess.preprocess(image)
+        image = Image.merge("RGB", (image, image, image))
         # Getting the predictions
         result, confidence, prediction = predict_image(image)
         
@@ -61,7 +62,7 @@ def main():
         targets = [ClassifierOutputTarget(prediction)]
         target_layers = [model.features[-1]]
         cam = GradCAM(model=model, target_layers=target_layers)
-        rgb_image = Image.merge("RGB", (image, image, image))
+        rgb_image = image
         img_float = np.array(rgb_image) / 255
         input_tensor = preprocess_image(img_float)
         grayscale_cams = cam(input_tensor=input_tensor.float(), targets=targets)
