@@ -60,9 +60,10 @@ def main():
         alpha = st.slider("Transparency level", 0.0, 1.0, 0.5, 0.1)
 
         output = model(transform(image).unsqueeze(0))
+        _, predicted = torch.max(output, 1)
         
         # Creating heatmap
-        targets = [ClassifierOutputTarget(prediction)]
+        targets = [ClassifierOutputTarget(predicted)]
         target_layers = [model.features[-1]]
         cam = pytorch_grad_cam.HiResCAM(model=model, target_layers=target_layers)
         img_float = np.float32(np.array(image)) / 255
