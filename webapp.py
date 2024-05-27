@@ -59,6 +59,8 @@ def main():
         # Creating Slider
         alpha = st.slider("Transparency level", 0.0, 1.0, 0.5, 0.1)
 
+        output = model(transform(image).unsqueeze(0))
+        
         # Creating heatmap
         targets = [ClassifierOutputTarget(prediction)]
         target_layers = [model.features[-1]]
