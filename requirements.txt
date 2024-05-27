@@ -2,7 +2,7 @@ streamlit
 matplotlib
 tensorflow 
 numpy 
-opencv-python-headless
+opencv-python
 pandas 
 gdown
 tensorflow_hub
