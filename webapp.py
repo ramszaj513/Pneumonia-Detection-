@@ -83,6 +83,9 @@ def main():
             plt.imshow(cam_image)
             plt.axis('off')
             st.pyplot(figure)
+
+            st.cache_data.clear()
+            st.cache_resource.clear()
     
 
         except Exception as e:
