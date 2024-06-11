@@ -91,13 +91,14 @@ def main():
 
 
 def predict_image(image):
-    prediction = model(transform(image).unsqueeze(0))
-    _, predicted = torch.max(prediction, 1)
-    certainty = calculate_certainty(prediction)
-    if predicted == 1:
-        return "PNEUMONIA", certainty, prediction
-    else:
-        return "NORMAL", certainty, prediction
+    with torch.no_grad():
+        prediction = model(transform(image).unsqueeze(0))
+        _, predicted = torch.max(prediction, 1)
+        certainty = calculate_certainty(prediction)
+        if predicted == 1:
+            return "PNEUMONIA", certainty, prediction
+        else:
+            return "NORMAL", certainty, prediction
     
 def calculate_certainty(prediction):
     vec = prediction
